@@ -1,0 +1,152 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/12/Memory.jack
+/**
+ * This library provides two services: direct access to the computer's main
+ * memory (RAM), and allocation and recycling of memory blocks. The Hack RAM
+ * consists of 32,768 words, each holding a 16-bit binary number.
+ */ 
+class Memory {
+
+    static Array heap;
+    static int freeList;
+
+    /** Initializes the class. */
+    function void init() {
+        let heap=2048;
+        let freeList=2048;
+        let heap[0]=14334;
+        let heap[1]=0;
+        return;
+    }
+
+    /** Returns the RAM value at the given address. */
+    function int peek(int address) {
+        return heap[ (address-2048) ];
+    }
+
+    /** Sets the RAM value at the given address to the given value. */
+    function void poke(int address, int value) {
+        let heap[ (address-2048) ] = value;
+        return;
+    }
+
+    /** Finds an available RAM block of the given size and returns
+     *  a reference to its base address. */
+    function int alloc(int size) {
+        var int seg_size,remaining_size;
+        var int curr_freePtr,next_freePtr,prev_freePtr;
+        var int new_freePtr;
+        
+        let prev_freePtr=-1;
+        let curr_freePtr=freeList;
+        let seg_size=heap[freeList-2048];
+        
+
+        while((seg_size < size+1)){
+            let prev_freePtr=curr_freePtr;
+            let curr_freePtr=heap[ (curr_freePtr-2047) ];
+            if(curr_freePtr=0){
+                return -1-size;                                                              // When the block is not found....
+            }
+            let seg_size=heap[curr_freePtr-2048];
+        }
+
+        let heap[curr_freePtr-2048]=size;                                               // For storing the size of the block 
+
+        let next_freePtr=heap[curr_freePtr-2047];
+        let remaining_size=seg_size-size-1;
+
+
+        let new_freePtr=curr_freePtr+1+size;
+
+
+                                                        // Updating the pointer from prev freeList
+        if(prev_freePtr=-1){
+            let freeList=new_freePtr;
+        }
+        else{
+            let heap[prev_freePtr-2047]=new_freePtr;
+        }
+
+
+                                                        //Updating the new pointer
+        let heap[new_freePtr-2048]=remaining_size;
+        let heap[new_freePtr+1-2048]=next_freePtr;
+
+
+        return curr_freePtr+1;
+    }
+
+
+
+    /** De-allocates the given object (cast as an array) by making
+     *  it available for future allocations. */
+    function void deAlloc(Array o) {
+        var int new_freePtr,curr_freePtr,next_freePtr;
+        var int dealloc_size;
+        var int curr_free_size,next_free_size,new_free_size;
+
+        let curr_freePtr=freeList;
+        let next_freePtr=heap[curr_freePtr-2047];
+
+        if(freeList<o){
+            while((next_freePtr<o) & (~(next_freePtr=0))){
+                let curr_freePtr=next_freePtr;
+                let next_freePtr=heap[next_freePtr-2047];
+            }
+            if(next_freePtr=0){
+                return;
+            }
+
+            let new_freePtr=o-1;
+
+            let dealloc_size=heap[new_freePtr-2048];
+            let heap[new_freePtr-2048]=dealloc_size-1;
+            let heap[o-2048]=next_freePtr;
+
+            let heap[curr_freePtr-2047]=new_freePtr;      
+
+
+            // Check if the freeLists are contiguous, if so merge them
+            let curr_free_size=heap[curr_freePtr-2048];
+            let next_free_size=heap[next_freePtr-2048];
+            let new_free_size=heap[new_freePtr-2048];
+
+            if(new_freePtr+new_free_size+2=next_freePtr){
+                let new_free_size=new_free_size+2+next_free_size;
+                let next_freePtr=heap[next_freePtr-2047];
+
+                let heap[new_freePtr-2048]=new_free_size;
+                let heap[new_freePtr-2047]=next_freePtr;
+            }  
+
+            if(curr_freePtr+curr_free_size+2=new_freePtr){
+                let curr_free_size=curr_free_size+2+new_free_size;
+                let new_freePtr=heap[new_freePtr-2047];
+
+                let heap[curr_freePtr-2048]=curr_free_size;
+                let heap[curr_freePtr-2047]=new_freePtr;
+            }  
+
+            return;
+
+
+        }
+        else{
+            let dealloc_size=heap[o-1-2048];
+            let heap[o-1-2048]=dealloc_size-1;
+            let heap[o-2048]=freeList;
+            
+            if((o+dealloc_size)=freeList){
+                let heap[o-2048]=heap[freeList-2047];
+                let heap[o-1-2048]=heap[o-1-2048]+2+heap[freeList-2048];
+            }
+
+            let freeList=o-1;                                   // Updating the static 'freeList' pointer
+            return;
+        }
+    
+    }    
+}
