@@ -1,0 +1,97 @@
+function Draw.drawX 6
+push constant 0
+pop local 0
+push constant 1
+pop local 1
+push local 0
+call Screen.setColor 1
+pop temp 0
+push constant 20
+neg
+pop local 2
+push constant 10
+pop local 3
+push constant 20
+neg
+pop local 4
+push constant 0
+pop local 5
+label WHILE_EXP0
+push local 5
+push local 3
+lt
+not
+if-goto WHILE_END0
+push argument 0
+push local 2
+add
+push local 5
+add
+push argument 1
+push local 4
+add
+push argument 0
+push local 2
+sub
+push local 5
+sub
+push argument 1
+push local 4
+sub
+call Screen.drawLine 4
+pop temp 0
+push argument 0
+push local 2
+sub
+push local 5
+sub
+push argument 1
+push local 4
+add
+push argument 0
+push local 2
+add
+push local 5
+add
+push argument 1
+push local 4
+sub
+call Screen.drawLine 4
+pop temp 0
+push local 5
+push constant 1
+add
+pop local 5
+goto WHILE_EXP0
+label WHILE_END0
+push constant 0
+return
+function Draw.drawO 4
+push constant 0
+pop local 0
+push constant 1
+pop local 1
+push constant 8
+pop local 2
+push constant 12
+pop local 3
+push local 0
+call Screen.setColor 1
+pop temp 0
+push argument 0
+push argument 1
+push local 2
+push local 3
+add
+call Screen.drawCircle 3
+pop temp 0
+push local 1
+call Screen.setColor 1
+pop temp 0
+push argument 0
+push argument 1
+push local 3
+call Screen.drawCircle 3
+pop temp 0
+push constant 0
+return

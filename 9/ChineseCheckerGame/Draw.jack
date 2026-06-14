@@ -1,0 +1,38 @@
+class Draw{
+	
+    function void drawX(int mid_x,int mid_y){
+    	var boolean white,black;
+    	var int disp_x,width,disp_y,iter;
+    	let white=0;
+    	let black=1;
+    	
+    	do Screen.setColor(white);
+    	
+    	let disp_x=-20;
+    	let width=10;
+    	let disp_y=-20;
+    	let iter=0;
+    	
+    	while(iter<width){
+    		do Screen.drawLine(mid_x+disp_x+iter,mid_y+disp_y,mid_x-disp_x-iter,mid_y-disp_y);
+    		do Screen.drawLine(mid_x-disp_x-iter,mid_y+disp_y,mid_x+disp_x+iter,mid_y-disp_y);
+    		let iter=iter+1;
+    	}
+        return;
+    }
+    
+    function void drawO(int mid_x,int mid_y){
+    	var boolean white,black;
+    	var int width,inner_radius;
+    	let white=0;
+    	let black=1;
+    	let width=8;
+    	let inner_radius=12;
+    	
+    	do Screen.setColor(white);
+    	do Screen.drawCircle(mid_x,mid_y,width+inner_radius);
+    	do Screen.setColor(black);
+    	do Screen.drawCircle(mid_x,mid_y,inner_radius);
+        return;
+    }
+}

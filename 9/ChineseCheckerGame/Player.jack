@@ -1,0 +1,93 @@
+class Player{
+	field Array arr;
+	field char symbol;
+	static Array already_occupied;
+	
+	function Array getAlready(){
+		return already_occupied;
+	}
+	
+	constructor Player new(char c){
+		var int i;
+		let i=0;
+		let arr=Array.new(9);
+		while(i<9){
+			let arr[i]=0;
+			let i=i+1;
+		}
+		if (already_occupied = null) {
+            		let already_occupied = Array.new(9);
+            		let i = 0;
+            		while (i < 9) {
+                		let already_occupied[i] = 0;
+                		let i = i + 1;
+            		}
+        	}
+		let symbol=c;
+		return this;
+	}
+	method boolean ispresent(int idx){
+		return arr[idx];
+	} 
+	method bool choose(int idx){
+		var int x,y,row,col;
+		var bool black;
+
+		let black=1;
+
+		if(already_occupied[idx] > 0){
+			return 0;
+		}
+
+		let arr[idx]=1;
+		let col = Math.divide(idx,3);
+		let row=idx-Math.multiply(3,col);
+
+		let idx=idx+1;
+		do Screen.setColor(black);
+            if(idx=1){
+                do Screen.drawRectangle(125,60,175,90);
+            }
+            if(idx=2){
+                do Screen.drawRectangle(230,60,280,90);
+            }
+            if(idx=3){
+                do Screen.drawRectangle(335,60,385,90);
+            }
+            if(idx=4){
+                do Screen.drawRectangle(125,120,175,150);
+            }
+            
+            if(idx=5){
+                do Screen.drawRectangle(230,120,280,150);
+            }
+            if(idx=6){
+                do Screen.drawRectangle(335,120,385,150);
+            }
+            
+            if(idx=7){
+                do Screen.drawRectangle(125,180,175,210);
+            }
+            if(idx=8){
+                do Screen.drawRectangle(230,180,280,210);
+            }
+            if(idx=9){
+                do Screen.drawRectangle(335,180,385,210);
+            }
+		let idx=idx-1;
+
+
+		let x=Math.multiply(row,105)+150;
+		let y=Math.multiply(col,60)+75;
+
+		if(symbol=88){
+			do Draw.drawX(x,y);
+			let already_occupied[idx]=1; //for p1 - X
+		}
+		else{
+			do Draw.drawO(x,y);
+			let already_occupied[idx]=2;  // for p2 - O
+		}
+		return 1;
+	}
+}

@@ -1,0 +1,74 @@
+class Gamestatus{
+	function bool isGameOver(){
+		var Array already_occupied;
+		var int iter;		
+
+		let iter=0;
+		let already_occupied=Array.new(9);
+		while(iter<9){
+			let already_occupied=Player.getAlready();
+			let iter=iter+1;
+		}
+		
+		let iter=0;
+		while(iter<9){
+			if(already_occupied[iter]=0){
+				return false;
+			}
+			let iter=iter+1;
+		}		
+		return true;
+		
+	}
+	function int gameWinner(){
+		var int iter,start_idx;   		// 0-tie ; 1-P1 ; 2-P2 ;
+		var Array already_occupied;
+		
+
+		let iter=0;
+		let already_occupied=Array.new(9);
+		while(iter<9){
+			let already_occupied=Player.getAlready();
+			let iter=iter+1;
+		}
+
+
+		//check rows
+		let iter=0;
+		while(iter<3){
+			let start_idx=Math.multiply(iter,3);
+			if((~(already_occupied[start_idx]=0)) & (already_occupied[start_idx]=already_occupied[start_idx+1]) & (already_occupied[start_idx+1]=already_occupied[start_idx+2])){
+				return already_occupied[start_idx];
+			}
+			let iter=iter+1;
+		}
+		
+		//check columns
+		let iter=0;
+		while(iter<3){
+			let start_idx=iter;
+			if((~(already_occupied[start_idx]=0)) & (already_occupied[start_idx]=already_occupied[start_idx+3]) & (already_occupied[start_idx]=already_occupied[start_idx+6])){
+				return already_occupied[start_idx];
+			}
+			let iter=iter+1;
+		}
+		
+		//check diagonals
+		if((~(already_occupied[0]=0)) & (already_occupied[0]=already_occupied[4]) & (already_occupied[4]=already_occupied[8])){
+			return already_occupied[4];
+		}
+		if((~(already_occupied[2]=0)) & (already_occupied[2]=already_occupied[4]) & (already_occupied[4]=already_occupied[6])){
+			return already_occupied[4];
+		}
+		
+		
+		if( Gamestatus.isGameOver() ){
+			return 0;
+		}
+		else{
+			return -1;   // Game not over, continue the game from here
+		}
+		
+		
+	}
+}

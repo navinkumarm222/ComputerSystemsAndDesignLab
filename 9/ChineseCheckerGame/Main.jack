@@ -1,0 +1,78 @@
+class Main{
+    function void main(){
+        var Grid mygrid;
+        var Player p1,p2;
+        var char x,o;
+        var int time_from_start,idx,res,div;
+        var bool mycheck,black;
+        
+        do Screen.clearScreen();
+        do mygrid.show();
+        
+        let x=88; //'X';
+        let o=79; //'O';
+        let p1=Player.new(x);
+        let p2=Player.new(o);
+        let black=1;
+        
+        /*
+        do p2.choose(0);
+        do p1.choose(1);
+        do p1.choose(2);
+        do p1.choose(3);
+        do p1.choose(4);
+        do p1.choose(5);
+        do p1.choose(0);
+        do p1.choose(7);
+        do p1.choose(8);
+        do p1.choose(6);
+        */
+        let time_from_start=0;
+                                                                                     // let cond=Gamestatus.isGameOver();
+                                                                                     // while(~cond)
+                                                                                     // let div=Math.divide(time_from_start,2);
+                                                                                     //if(time_from_start=Math.multiply(2,div))
+        
+        let res=-1;
+        while(true){   
+            let mycheck=false;                                                              
+        	while((time_from_start=0) & (~(mycheck))){                            
+                do Output.moveCursor(22, 0);                       
+        		let idx=Keyboard.readInt("Player 1, Enter your choice():");
+                if((idx>0)){
+                    let mycheck=p1.choose(idx-1);                                       // 0-indexing
+                }
+        	}
+        	while((time_from_start=1) & (~(mycheck))){
+                do Output.moveCursor(22, 0);
+        		let idx=Keyboard.readInt("Player 2, Enter your choice():");
+                if(idx>0){
+        		    let mycheck=p2.choose(idx-1);                                       // 0-indexing
+                }
+        	}
+
+            do Output.moveCursor(22, 0);
+            do Output.printString("                                         ");
+
+        	let time_from_start=1-time_from_start;
+        	let res=Gamestatus.gameWinner();
+        	
+        	if(~(res=-1)){
+                do Output.moveCursor(0, 0);
+        		if(res=0){
+        			do Output.printString("Tie !!!");
+        		}
+        		if(res=1){
+        			do Output.printString("Player 1 won !!!");
+        		}
+        		if(res=2){
+        			do Output.printString("Player 2 won !!!");
+        		}
+        		return;
+        	}
+        }
+        do Output.moveCursor(0, 0);
+        do Output.printString("Game Over !!!");
+        return;
+    }
+}

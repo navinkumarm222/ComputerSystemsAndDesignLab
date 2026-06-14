@@ -1,0 +1,58 @@
+class Grid{
+    method void show(){
+    	var boolean white,black;
+    	let white=0;
+    	let black=1;
+    	do Screen.setColor(white);
+        do Screen.drawRectangle(0,0,500,250);
+        //do Screen.drawRectangle(100,50,410,220);
+        do Screen.setColor(black);
+        do Screen.drawRectangle(100,50,200,100);
+        do Screen.drawRectangle(205,50,305,100);
+        do Screen.drawRectangle(310,50,410,100);
+        
+        do Screen.drawRectangle(100,110,200,160);
+        do Screen.drawRectangle(205,110,305,160);
+        do Screen.drawRectangle(310,110,410,160);
+        
+        do Screen.drawRectangle(100,170,200,220);
+        do Screen.drawRectangle(205,170,305,220);
+        do Screen.drawRectangle(310,170,410,220);
+
+
+        do Screen.setColor(white);
+            do Screen.drawRectangle(125,60,175,90);
+            do Screen.drawRectangle(230,60,280,90);
+            do Screen.drawRectangle(335,60,385,90);
+            
+            do Screen.drawRectangle(125,120,175,150);
+            do Screen.drawRectangle(230,120,280,150);
+            do Screen.drawRectangle(335,120,385,150);
+            
+            do Screen.drawRectangle(125,180,175,210);
+            do Screen.drawRectangle(230,180,280,210);
+            do Screen.drawRectangle(335,180,385,210);
+
+        do Screen.setColor(black);
+            do Output.moveCursor(6,18);
+            do Output.printInt(1);
+            do Output.moveCursor(12,18);
+            do Output.printInt(4);
+            do Output.moveCursor(17,18);
+            do Output.printInt(7);
+            do Output.moveCursor(6,31);
+            do Output.printInt(2);
+            do Output.moveCursor(12,31);
+            do Output.printInt(5);
+            do Output.moveCursor(17,31);
+            do Output.printInt(8);
+            do Output.moveCursor(6,45);
+            do Output.printInt(3);
+            do Output.moveCursor(12,45);
+            do Output.printInt(6);
+            do Output.moveCursor(17,45);
+            do Output.printInt(9);
+        
+        return;
+    }
+}
